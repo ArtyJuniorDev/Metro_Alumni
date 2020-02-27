@@ -57,10 +57,23 @@
 	            <h4 class="text-warning"> ประธานรุ่น <?php echo $year_name[3] ?></h4>          
              </div>
             <div class="credits">
-                <a href="pvcinfo.php?version=<?php echo urlencode($year_name[2]) ?>&year=<?php echo urldecode($year_name[0])?>" class="btn btn-primary">ดูข้อมูล</a>
+            <div class="col-md-5 mr-auto ml-auto">
+                <div class="component">
+                    <div class="card mb-4">
+                            <div class="card-header">
+                                <h4 class="card-title">เพิ่มข้อมูลผู้สำเร็จการศึกษา</h4>
+                                <p class="card-text text-danger"> All For One</p>
+                                <p class="card-text text-danger"> ประจำปีการศึกษา 2562</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="addStudentId.php" class="btn btn-primary btn-block">เพิ่มข้อมูล</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <h1 class="text-dark">เลือกระดับชั้นที่ต้องการ</h1>
             </div>
-            
         </div>
       </div>
     </div>
