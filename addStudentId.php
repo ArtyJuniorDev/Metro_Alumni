@@ -53,7 +53,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
           <ul class="navbar-nav">
-            <li class="nav-item dropdown mx-2">
+            <!-- <li class="nav-item dropdown mx-2">
               <a
                 class="nav-link"
                 href="#"
@@ -81,7 +81,7 @@
                   >Core Elements</a
                 >
               </div>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>

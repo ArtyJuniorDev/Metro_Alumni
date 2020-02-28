@@ -62,7 +62,7 @@ $row = mysqli_fetch_row($query_run);
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
           <ul class="navbar-nav">
-            <li class="nav-item dropdown mx-2">
+            <!-- <li class="nav-item dropdown mx-2">
               <a
                 class="nav-link"
                 href="#"
@@ -90,7 +90,7 @@ $row = mysqli_fetch_row($query_run);
                   >Core Elements</a
                 >
               </div>
-            </li>
+            </li> -->
             <!-- <li class="nav-item dropdown mx-2">
               <a class="nav-link" href="#" id="nav-inner-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-inner-primary_dropdown_1">
