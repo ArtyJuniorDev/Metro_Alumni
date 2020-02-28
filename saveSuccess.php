@@ -31,7 +31,7 @@
   <body class="index">
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
       <div class="container">
-        <a class="navbar-brand" href="./"
+        <a class="navbar-brand" href="#"
           ><img
             src="assets/img/cmt-icon.png"
             alt="Example Navbar 1"
@@ -129,7 +129,7 @@
                     </div>
                     <!-- <small id="searchHelp" class="form-text text-info">สามารถค้นได้จาก ชื่อ,ชื่อเล่น,และรหัสนักศึกษา</small> -->
                     <a
-                      class="btn btn-info mt-1 btn-pill col-md-4 offset-md-4 text-light" href="index.php"
+                      class="btn btn-info mt-1 btn-pill col-md-4 offset-md-4 text-light" href="addStudentId.php"
                     >
                       หน้าแรก
                     </a>

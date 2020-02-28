@@ -40,7 +40,7 @@ $row = mysqli_fetch_row($query_run);
   <body class="index">
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
       <div class="container">
-        <a class="navbar-brand" href="./"
+        <a class="navbar-brand" href="#"
           ><img
             src="assets/img/cmt-icon.png"
             alt="Example Navbar 1"
