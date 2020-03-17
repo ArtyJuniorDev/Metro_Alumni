@@ -1,27 +1,81 @@
 <?php 
-    include 'connect.php';
-    $version_name = mysqli_real_escape_string($connection, $_GET['version']);
-    $version = mysqli_real_escape_string($connection, $_GET['version']);
-    $year = mysqli_real_escape_string($connection, $_GET['year']);
-    
-    switch ($year) {
-        case $year == 2554: $version = '2554'; break;
-        case $year == 2555: $version = '2555'; break;
-        case $year == 2556: $version = '2556'; break;
-        case $year == 2557: $version = '2557'; break;
+  include 'connect.php';
+  $version_name = mysqli_real_escape_string($connection, $_GET['version']);
+  $version = mysqli_real_escape_string($connection, $_GET['version']);
+  $year = mysqli_real_escape_string($connection, $_GET['year']);
+
+  switch ($year) {
+      case $year == 2554: $version = '2554'; break;
+      case $year == 2555: $version = '2555'; break;
+      case $year == 2556: $version = '2556'; break;
+      case $year == 2557: $version = '2557'; break;
+  }
+
+  
+
+  $query = "SELECT * FROM tblstudentpvs WHERE version = '$version' UNION SELECT * FROM tblstudentpvss WHERE version = '$version'";
+  $query_run = mysqli_query($connection, $query);
+  $row = mysqli_fetch_row($query_run);
+  $rows = $row[0];
+  $page_rows = 10;
+  
+  $last = ceil($rows/$page_rows);
+
+  if ($rows == null) {
+    header("Location: empty.php");
+  }
+
+  if ($last < 1) {
+    $last = 1;
+  }
+
+  $pagenum = 1;
+
+if(isset($_GET['pn'])){
+  $pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
+}
+
+if ($pagenum < 1) {
+  $pagenum = 1;
+}
+
+else if ($pagenum > $last) {
+  $pagenum = $last;
+}
+
+$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+
+$nquery=mysqli_query($connection,"SELECT * FROM tblstudentpvs WHERE version = '$version' UNION SELECT * FROM tblstudentpvss WHERE version = '$version' $limit");
+
+$paginationCtrls = '';
+
+if($last != 1){
+  if ($pagenum > 1) {
+    $previous = $pagenum - 1;
+    $paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previous.'&version='.$version.'&year='.$year.'" class="btn btn-primary">Previous</a> &nbsp; &nbsp; ';
+  
+    for($i = $pagenum-4; $i < $pagenum; $i++){
+     if($i > 0){
+      $paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'&version='.$version.'&year='.$year.'" class="btn btn-secondary">'.$i.'</a> &nbsp; ';
+        }
     }
+  }
 
-    $perpage = 10;
-    if (isset($_GET['page'])) {
-        $page = $_GET['page'];
-    } else {
-        $page = 1;
+  $paginationCtrls .= ''.$pagenum.' &nbsp; ';
+
+  for($i = $pagenum+1; $i <= $last; $i++){
+    $paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'&version='.$version.'&year='.$year.'" class="btn btn-secondary">'.$i.'</a> &nbsp; ';
+    if($i >= $pagenum+4){
+        break;
     }
+  }
 
-    $start = ($page - 1) * $perpage;
+  if ($pagenum != $last) {
+    $next = $pagenum + 1;
+    $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'&version='.$version.'&year='.$year.'" class="btn btn-primary">Next</a> ';
+  }
+}
 
-$query = "SELECT * FROM tblstudentpvs WHERE version = '$version' UNION SELECT * FROM tblstudentpvss WHERE version = '$version' ORDER BY stid LIMIT {$start}, {$perpage}";
-    $query_run = mysqli_query($connection, $query);
 ?>
  
 <!DOCTYPE html>
@@ -79,79 +133,47 @@ $query = "SELECT * FROM tblstudentpvs WHERE version = '$version' UNION SELECT * 
 	</div>
 
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-hover table-borderless bg-light">
-                    <thead class="bg-primary text-light text-center">
-                        <tr>
-                        <th scope="col">รหัสนักศึกษา</th>
-                        <th scope="col">ชื่อ</th>
-                        <th scope="col">ชื่อเล่น</th>
-                        <th scope="col">แผนกวิชา</th>
-                        <th scope="col">รายละเอียด</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                        if (mysqli_num_rows($query_run) > 0) {
-                            while ($row = mysqli_fetch_array($query_run)) { 
-                                $str_sub = trim($row['fname'])." ";
-                    ?>
-                        <tr>
-                        <th scope="row" width="200px" class="text-center"> <?php echo $row['stid'] ?> </th>
-                        <td width="200px">  <?php echo $str_sub.$row['name'].$row['lname'] ?> </td>
-                        <td class="text-center" width="100px"> <?php echo $row['nickname'] ?></td>
-                        <td class="text-center" width="100px"> <?php echo $row['stclass'] ?></td>
-                        <td class="text-center" width="100px"> <a class="btn btn-secondary" href="detail-pvc.php?stid=<?php echo $row['stid']?>"> รายละเอียด </a></td>
-                        </tr>
-                    <?php
-                            }
+			<div style="height: 20px;"></div>
+			<div class="row">
+				<div class="col-lg-12">
+					<table class="table table-hover table-borderless bg-light">
+						
+						<thead class="bg-primary text-light text-center">
+						  <tr>
+              <th scope="col">รหัสนักศึกษา</th>
+              <th scope="col">ชื่อ</th>
+              <th scope="col">ชื่อเล่น</th>
+              <th scope="col">แผนกวิชา</th>
+              <th scope="col">รายละเอียด</th>
+              </tr>
+						</thead>
+					
+						<tbody>
+							<?php
+								while($crow = mysqli_fetch_array($nquery)){
 
-                        } else {
-                            echo "ไม่พบข้อมูล";
-                        }
-                    ?>
-                    </tbody>
-                </table>
-                <?php
-                    $sql2 = "SELECT * FROM tblstudentpvs WHERE version = '$version' UNION SELECT * FROM tblstudentpvss WHERE version = '$version' ORDER BY stid ASC";
-                    $query2 = mysqli_query($connection, $sql2);
-                    $total_record = mysqli_num_rows($query2);
-                    $total_page = ceil($total_record / $perpage);
-                ?>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-end">
-                        <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <?php for($i=1;$i<=$total_page;$i++) { ?>
-                        <li class="page-item"><a href="pvsinfo.php?page=<?php echo $i;?>&version=<?php echo $version_name?>&year=<?php echo $year?>" ><?php echo $i; ?> </a></li>
-                        <?php } ?>
-                        <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
+                  $str_sub = trim($crow['fname'])." ";
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-            <a href="pvsinfo.php?page=1&version=<?php echo $version_name?>&year=<?php echo $year?>" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            </a>
-            </li>
-          
-            <li class="page-item">
-            <a href="pvsinfo.php?page=<?php echo $total_page;?>&version=<?php echo $version_name?>&year=<?php echo $year?>" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            </a>
-            </li>
-        </ul>
-    </nav>
-
+							?>
+							<tr>
+              <th scope="row" width="200px" class="text-center"> <?php echo $crow['stid'] ?> </th>
+              <td width="200px">  <?php echo $str_sub.$crow['name'].$crow['lname'] ?> </td>
+              <td class="text-center" width="100px"> <?php echo $crow['nickname'] ?></td>
+              <td class="text-center" width="100px"> <?php echo $crow['stclass'] ?></td>
+              <td class="text-center" width="100px"> <a class="btn btn-secondary" href="detail-pvs.php?stid=<?php echo $crow['stid']?>&year=<?php echo $year ?>&version=<?php echo $version ?>"> รายละเอียด </a></td>
+							</tr>
+							<?php
+									}
+							?>
+						</tbody>
+					</table>
+					<div id="pagination_controls"><?php echo $paginationCtrls; ?></div>
+				</div>
+				<div class="col-lg-2">
+				</div>
+			</div>
+		</div>
+            
     
 
 
