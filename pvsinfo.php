@@ -108,12 +108,8 @@ if($last != 1){
         <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
 	        <ul class="navbar-nav">
             <li class="nav-item dropdown mx-2">
-              <a class="nav-link" href="#" id="nav-inner-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-inner-primary_dropdown_1">
-                <a class="dropdown-item" href="documentation/getting_started.html" target="_blank">Getting Started</a>
-                <a class="dropdown-item" href="documentation/alerts.html" target="_blank">Core Elements</a>
-                
-              </div>
+            <a class="nav-link" href="index.php" id="nav-inner-primary_dropdown_1">Home</a>
+
             </li>
           </ul>
         </div>
@@ -160,7 +156,7 @@ if($last != 1){
               <td width="200px">  <?php echo $str_sub.$crow['name'].$crow['lname'] ?> </td>
               <td class="text-center" width="100px"> <?php echo $crow['nickname'] ?></td>
               <td class="text-center" width="100px"> <?php echo $crow['stclass'] ?></td>
-              <td class="text-center" width="100px"> <a class="btn btn-secondary" href="detail-pvs.php?stid=<?php echo $crow['stid']?>&year=<?php echo $year ?>&version=<?php echo $version ?>"> รายละเอียด </a></td>
+              <td class="text-center" width="100px"> <a class="btn btn-secondary" href="detail-pvs.php?stid=<?php echo $crow['stid']?>&year=<?php echo $year ?>&version=<?php echo $version ?>&pn=<?php echo $pagenum?>"> รายละเอียด </a></td>
 							</tr>
 							<?php
 									}

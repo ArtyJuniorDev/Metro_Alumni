@@ -125,7 +125,7 @@
                 <div class="card-body col-md-10 offset-md-1">
                   <form action="addStudentInformation.php" method="post">
                     <div class="page-header mb-3 pt-3 ml-4">
-                      <h4 id="colours" class="text-danger">ไม่พบข้อมูล</h3>
+                      <h4 id="colours" class="text-danger mr-3 text-center">ไม่พบข้อมูล</h3>
                     </div>
                     <!-- <small id="searchHelp" class="form-text text-info">สามารถค้นได้จาก ชื่อ,ชื่อเล่น,และรหัสนักศึกษา</small> -->
                     <a

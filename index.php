@@ -27,11 +27,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown-7">
 	        <ul class="navbar-nav">
             <li class="nav-item dropdown mx-2">
-              <a class="nav-link" href="#" id="nav-inner-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-inner-primary_dropdown_1">
-                <a class="dropdown-item" href="documentation/getting_started.html" target="_blank">Getting Started</a>
-                <a class="dropdown-item" href="documentation/alerts.html" target="_blank">Core Elements</a>
-              </div>
+            <a class="nav-link" href="index.php" id="nav-inner-primary_dropdown_1">Home</a> 
             </li>
             <!-- <li class="nav-item dropdown mx-2">
               <a class="nav-link" href="#" id="nav-inner-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
@@ -94,8 +90,8 @@
     
     <div class="row">
         <div class="form-group mr-auto ml-auto col-md-5 text-center">
-          <form>
-            <input type="text" class="form-control" id="inputSearch" placeholder="ค้นหา">
+          <form action="showDetail.php" method="GET">
+            <input type="text" name="stid" class="form-control" id="inputSearch" placeholder="ค้นหา">
             <small id="searchHelp" class="form-text text-info">สามารถค้นได้จาก ชื่อ,ชื่อเล่น,และรหัสนักศึกษา</small>
             <button class="btn btn-info mt-1">ค้นหา</button>
           </form>

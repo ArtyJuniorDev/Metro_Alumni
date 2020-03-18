@@ -1,23 +1,49 @@
 <?php 
   include 'connect.php';
-  $version_name = mysqli_real_escape_string($connection, $_GET['version']);
-  $version = mysqli_real_escape_string($connection, $_GET['version']);
-  $year = mysqli_real_escape_string($connection, $_GET['year']);
+
   $stid = mysqli_real_escape_string($connection, $_GET['stid']);
 
-  switch ($year) {
-      case $year == 2554: $version = '2554'; break;
-      case $year == 2555: $version = '2555'; break;
-      case $year == 2556: $version = '2556'; break;
-      case $year == 2557: $version = '2557'; break;
+  if ($stid == null) {
+    header("location: miss.php");
   }
-
-  
-
+ 
   $query = "SELECT * FROM tblstudentpvc WHERE stid = '$stid' ORDER BY stid ASC";
   $query_run = mysqli_query($connection, $query);
-
   $row = mysqli_fetch_row($query_run);
+
+  if ($row == null) {
+    $query_special = "SELECT * FROM tblstudentpvs WHERE stid = '$stid' ORDER BY stid ASC";
+    $query_run = mysqli_query($connection, $query_special);
+    $row = mysqli_fetch_row($query_run);
+  }
+
+  if ($row == null) {
+    $query_special = "SELECT * FROM tblstudentpvss WHERE stid = '$stid' ORDER BY stid ASC";
+    $query_run = mysqli_query($connection, $query_special);
+    $row = mysqli_fetch_row($query_run);
+  }
+
+  if ($row == null) {
+    header("location: miss.php");
+  }
+
+  $version = $row[22];
+  switch ($version) {
+    case $version == 2554: $version = 'ทศวรรษ'; break;
+    case $version == 2555: $version = 'พิทวัส 11'; break;
+    case $version == 2556: $version = 'เอกนักษัตริย์'; break;
+    case $version == 2557: $version = 'ปราชปฏิพัทธ์'; break;
+  }
+
+  $year = $row[22];
+  switch ($year) {
+    case $year == 2554: $year = '2554'; break;
+    case $year == 2555: $year = '2555'; break;
+    case $year == 2556: $year = '2556'; break;
+    case $year == 2557: $year = '2557'; break;
+    }
+
+
   $str_sub = trim($row[1])." ";
   $birth_day = substr($row[6], 8);
   $birth_month = substr($row[6], 6, 1);
@@ -37,6 +63,8 @@
     case $birth_month == 11: $birth_month = 'พฤศจิกายน'; break;
     case $birth_month == 12: $birth_month = 'ธันวาคม'; break;
 }
+
+
 
 $years_int = (int)$birth_years;
 $year_thai = $years_int + 543;
@@ -93,7 +121,7 @@ if ($email == null) {
       <div class="row">
         <div class="col-12 col-lg-8  offset-lg-2 text-center mb-2">
 	          <div class="title">
-	            <h3 class="display-2 text-white"> รุ่น <?php echo $version_name ?></h3>
+	            <h3 class="display-2 text-white"> รุ่น <?php echo $version ?></h3>
 	            <h4 class="text-white mt-3">ระดับชั้นประกาศนียบัตรวิชาชีพ ปีการศึกษา <?php echo $year ?></h4>
             </div>
         </div>
